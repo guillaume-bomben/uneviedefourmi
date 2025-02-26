@@ -3,7 +3,6 @@
 #include <vector>
 #include <algorithm>
 
-
 class Graph {
     public:
         Graph();

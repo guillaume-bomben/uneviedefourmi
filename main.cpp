@@ -1,4 +1,4 @@
-#include "include/graph.h"
+#include "src/Graph.cpp"
 
 int main() {
     Graph g;
