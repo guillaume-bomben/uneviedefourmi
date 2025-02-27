@@ -14,9 +14,12 @@ class Ants {
         void addAnt(string name, string* roomName);
         void removeAnt(string name);
         void printAnts();
-        void moveAnt(string name, string* roomName);
+        void moveAnt(string name, string* roomName, Graph& g);
+
 
         void simulateAnts(string src, string dest, Graph g);
     private:
-        map<string, string*> antsList;
+        map<string, pair<string*, bool>> antsList;
+        map<string, int> roomCapacity;
+
 };
