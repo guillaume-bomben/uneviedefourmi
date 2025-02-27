@@ -17,7 +17,10 @@ class Graph {
         void removeVertex(string v);
         void removeEdge(string v1, string v2);
         int getVertexIndex(string v);
-        void shortestPath(string src, string dest);
+        vector<string> shortestPath(string src, string dest);
+        string getVertexName(int i) { return vertexList[i]; }
+        int getEdgeWeight(string v1, string v2) { return edgeList[{v1, v2}]; }
+
     private:
         vector<string> vertexList;  // Liste des sommets (nom)
         map<pair<string, string>, int> edgeList;  // Liste des arêtes avec poids

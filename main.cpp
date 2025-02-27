@@ -1,38 +1,24 @@
-#include "src/Graph.cpp"
+#include "src/ants.cpp"
 
 int main() {
+    Ants a;
     Graph g;
-    g.addVertex("1");
-    g.addVertex("2");
-    g.addVertex("3");
-    g.addVertex("4");
-    g.addVertex("5");
-    g.addVertex("6");
-    g.addVertex("7");
-    g.addVertex("8");
-    g.addVertex("9");
-    g.addVertex("15");
-    g.addEdge("1", "2",1);
-    g.addEdge("1", "3",1);
-    g.addEdge("2", "4",1);
-    g.addEdge("4", "5",1);
-    g.addEdge("3", "6",1);
-    g.addEdge("6", "7",1);
-    g.addEdge("7", "8",1);
-    g.addEdge("8", "9",1);
-    g.addEdge("9", "15",1);
-    g.addEdge("15", "5",1);
-    g.addEdge("1", "5",1);
-    g.addEdge("2", "5",1);
-    g.addEdge("3", "5",1);
-    g.addEdge("1", "2",1000);
-    g.addEdge("1", "3",1500);
-    g.addEdge("2", "4",160);
-    g.addEdge("4", "5",10000);
-    g.addEdge("3", "6",2000);
-    g.addEdge("6", "7",10);
-    g.addEdge("3", "5",1200);
-    g.printGraph();
-    g.shortestPath("1", "5");
+    g.addVertex("Sv");
+    g.addVertex("S1");
+    g.addVertex("S2");
+    g.addVertex("Sd");
+
+    g.addEdge("Sv", "S1", 1);
+    g.addEdge("S1", "S2", 1);
+    g.addEdge("S2", "Sd", 1);
+
+    std::string src = g.getVertexName(g.getVertexIndex("Sv"));
+    for (int i = 0; i < 5; i++) {
+        // Ajout de fourmis
+        a.addAnt("Ant" + to_string(i), &src);
+    }
+
+    a.simulateAnts("Sv", "Sd", g);
+
     return 0;
 }
