@@ -3,48 +3,130 @@
 Graph::Graph(){}
 Graph::~Graph(){}
 
-void Graph::addVertex(std::string v) {
-    adjList[v] = {};
+// void Graph::addVertex(string v) {
+//     vertexList.push_back(v);
+// }
+
+// void Graph::addEdge(string v1, string v2, int weight) {
+//     edgeList[make_pair(v1, v2)] = weight;
+//     edgeList[make_pair(v2, v1)] = weight;
+// }
+// void Graph::printGraph() {
+//     for (auto const& [v, adj] : edgeList) {
+//         cout << v.first << " " << v.second << " " << adj << endl;
+//     }
+// }
+
+// void Graph::removeVertex(string v) {
+//     vertexList.erase(remove(vertexList.begin(), vertexList.end(), v), vertexList.end());
+//     for (auto const& [edge, weight] : edgeList) {
+//         if (edge.first == v || edge.second == v) {
+//             edgeList.erase(edge);
+//         }
+//     }
+// }
+
+// void Graph::removeEdge(string v1, string v2) {
+//     edgeList.erase(make_pair(v1, v2));
+//     edgeList.erase(make_pair(v2, v1));
+// }
+
+// string Graph::getVertex(string i) {
+//     return vertexList.front();
+// }
+
+// Ajouter un sommet
+void Graph::addVertex(string v) {
+    vertexList.push_back(v);
 }
 
-void Graph::removeVertex(std::string v) {
-    if (adjList.find(v) == adjList.end()) {
-        return;
-    }
-    else {
-        adjList.erase(v);
-    }
-
-    for (auto const& [vertex, adj] : adjList) {
-        adjList[vertex].erase(std::remove(adjList[vertex].begin(), adjList[vertex].end(), v), adjList[vertex].end());
-    }
+// Ajouter une arête avec poids
+void Graph::addEdge(string v1, string v2, int weight) {
+    edgeList[{v1, v2}] = weight;
+    edgeList[{v2, v1}] = weight;  // Graphe non orienté
 }
 
-void Graph::addEdge(std::string v1, std::string v2) {
-    adjList[v1].push_back(v2);
-    adjList[v2].push_back(v1);
-}
-
+// Afficher le graphe
 void Graph::printGraph() {
-    for (auto const& [v, adj] : adjList) {
-        std::cout << v << ": ";
-        for (auto const& a : adj) {
-            std::cout << a << " ";
-        }
-        std::cout << std::endl;
+    for (auto const& [v, adj] : edgeList) {
+        cout << v.first << " - " << v.second << " : " << adj << endl;
     }
 }
 
+// Supprimer un sommet
+void Graph::removeVertex(string v) {
+    vertexList.erase(remove(vertexList.begin(), vertexList.end(), v), vertexList.end());
 
-void Graph::removeEdge(std::string v1, std::string v2) {
-    adjList[v1].erase(std::remove(adjList[v1].begin(), adjList[v1].end(), v2), adjList[v1].end());
-    adjList[v2].erase(std::remove(adjList[v2].begin(), adjList[v2].end(), v1), adjList[v2].end());
+    // Supprimer toutes les arêtes connectées au sommet
+    for (auto it = edgeList.begin(); it != edgeList.end();) {
+        if (it->first.first == v || it->first.second == v) {
+            it = edgeList.erase(it);
+        } else {
+            ++it;
+        }
+    }
 }
 
-std::string Graph::getVertex(std::string i) {
-    return adjList[i].front();
+// Supprimer une arête
+void Graph::removeEdge(string v1, string v2) {
+    edgeList.erase({v1, v2});
+    edgeList.erase({v2, v1});
 }
 
-std::string Graph::getEdge(std::string i, std::string j) {
-    return adjList[i].front();
+// Obtenir l’index d’un sommet dans la liste
+int Graph::getVertexIndex(string v) {
+    auto it = find(vertexList.begin(), vertexList.end(), v);
+    if (it != vertexList.end()) {
+        return distance(vertexList.begin(), it);
+    }
+    return -1;  // Retourne -1 si le sommet n'existe pas
+}
+
+// Algorithme de Dijkstra
+void Graph::shortestPath(string src, string dest) {
+
+    // Initialisation
+    map<string, int> dist;
+    map<string, string> prev;
+    for (string v : vertexList) {
+        dist[v] = numeric_limits<int>::max();
+        prev[v] = "";
+    }
+    dist[src] = 0;
+
+    // File de priorité
+    priority_queue<pair<int, string>, vector<pair<int, string>>, greater<pair<int, string>>> pq;
+    pq.push({0, src});
+
+    // Boucle principale
+    while (!pq.empty()) {
+        string u = pq.top().second;
+        pq.pop();
+
+        for (auto const& [edge, weight] : edgeList) {
+            string v = edge.second;
+            if (edge.first == u) {
+                if (dist[u] + weight < dist[v]) {
+                    dist[v] = dist[u] + weight;
+                    prev[v] = u;
+                    pq.push({dist[v], v});
+                }
+            }
+        }
+    }
+
+    // Affichage du chemin le plus court
+    string u = dest;
+    vector<string> path;
+    while (u != "") {
+        path.push_back(u);
+        u = prev[u];
+    }
+    reverse(path.begin(), path.end());
+    cout << "Chemin le plus court de " << src << " à " << dest << " : ";
+    for (string v : path) {
+        cout << v << " ";
+    }
+    cout << endl;
+    cout << "Distance : " << dist[dest] << endl;
 }

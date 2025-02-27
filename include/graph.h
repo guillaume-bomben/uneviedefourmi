@@ -1,20 +1,24 @@
 #include <iostream>
-#include <map>
 #include <vector>
-#include <string>
+#include <queue>
+#include <map>
+#include <limits>
 #include <algorithm>
+
+using namespace std;
 
 class Graph {
     public:
         Graph();
         ~Graph();
-        void addEdge(std::string v1, std::string v2);
-        void removeEdge(std::string v1, std::string v2);
-        void addVertex(std::string v);
-        void removeVertex(std::string v);
+        void addVertex(string v);
+        void addEdge(string v1, string v2, int weight);
         void printGraph();
-        std::string getVertex(std::string i);
-        std::string getEdge(std::string i, std::string j);
+        void removeVertex(string v);
+        void removeEdge(string v1, string v2);
+        int getVertexIndex(string v);
+        void shortestPath(string src, string dest);
     private:
-        std::map<std::string, std::vector<std::string>> adjList;
+        vector<string> vertexList;  // Liste des sommets (nom)
+        map<pair<string, string>, int> edgeList;  // Liste des arêtes avec poids
 };
