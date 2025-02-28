@@ -12,7 +12,7 @@ class Graph {
         Graph();
         ~Graph();
         void addVertex(string v);
-        void addEdge(string v1, string v2, int weight);
+        void addEdge(string v1, string v2, int weight1 , int weight2);
         void printGraph();
         void removeVertex(string v);
         void removeEdge(string v1, string v2);

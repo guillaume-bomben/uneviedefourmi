@@ -9,20 +9,19 @@ int main() {
     g.addVertex("S2");
     g.addVertex("Sd");
 
-    g.addEdge("Sv", "S1", 2);
-    g.addEdge("S1", "S2", 1);
-
 
 
 
     std::string src = g.getVertexName(g.getVertexIndex("Sv"));
     for (int i = 0; i < 5; i++) {
         // Ajout de fourmis
-        a.addAnt("Ant" + to_string(i), &src);
+        a.addAnt("Ant" + to_string(i+1), &src);
         numberOfAnts++;
     }
 
-    g.addEdge("S2", "Sd", numberOfAnts);
+    g.addEdge("Sv", "S1", numberOfAnts, 2);
+    g.addEdge("S1", "S2", 2, 1);
+    g.addEdge("S2", "Sd", 1 ,numberOfAnts);
 
     a.simulateAnts("Sv", "Sd", g);
 

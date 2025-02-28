@@ -9,9 +9,9 @@ void Graph::addVertex(string v) {
 }
 
 // Ajouter une arête avec poids
-void Graph::addEdge(string v1, string v2, int weight) {
-    edgeList[{v1, v2}] = weight;
-    edgeList[{v2, v1}] = weight;  // Graphe non orienté
+void Graph::addEdge(string v1, string v2, int weight1 , int weight2) {
+    edgeList[{v1, v2}] = weight2;
+    edgeList[{v2, v1}] = weight1;  // Graphe non orienté
 }
 
 // Afficher le graphe

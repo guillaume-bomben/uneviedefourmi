@@ -28,15 +28,23 @@ void Ants::moveAnt(string name, string* roomName, Graph& g) {
     if (antsList[name].second) return;
     string* currentRoom = antsList[name].first;
     string nextRoom = *roomName;
+
     if (roomCapacity[nextRoom] >= g.getEdgeWeight(*currentRoom, nextRoom)) {
         cout << "Room " << nextRoom << " is full, " << name << " cannot move.\n";
         return;
     }
+    cout << "*****************************************************" << endl;
+    cout << "Name of ant : " << name << endl;
+    cout << "Name of current room : " << *currentRoom << endl;
+    cout << "Name of next room : " << nextRoom << endl;
+    cout << "Ants on Next room : " << roomCapacity[nextRoom] << endl;
+    cout << "Next room capacity : " << g.getEdgeWeight(*currentRoom, nextRoom) << endl;
+    cout << name << " moved from " << *currentRoom << " to " << nextRoom << endl;
+    cout << "*****************************************************" << endl;
     roomCapacity[*currentRoom]--;
     roomCapacity[nextRoom]++;
     antsList[name].first = roomName;
 }
-
 
 
 void Ants::simulateAnts(string src, string dest, Graph g) {
@@ -44,30 +52,27 @@ void Ants::simulateAnts(string src, string dest, Graph g) {
     int AntsArrived = 0;
 
     while (AntsArrived != antsList.size()) {
-        for (int i = 1; i < path.size(); i++) {
-            vector<string> toMove;
-            for (auto& [name, data] : antsList) {
-                string* &roomName = data.first;
-                bool &arrived = data.second;
-                if (arrived) continue;
-                if (*roomName == path[i - 1]) {
-                    toMove.push_back(name);
-                }
+        vector<string> toMove;
+        for (auto& [name, data] : antsList) {
+            string* &roomName = data.first;
+            bool &arrived = data.second;
+            if (arrived) continue;
+            else {
+                toMove.push_back(name);
             }
-            int maxCapacity = g.getEdgeWeight(path[i - 1], path[i]);
-            int moved = 0;
-            for (string& name : toMove) {
-                if (moved >= maxCapacity) break;
-                moveAnt(name, &path[i], g);
-                printAnts();
-                moved++;
-
-                if (path[i] == dest) {
-                    antsList[name].second = true;
-                    AntsArrived++;
-                }
+        }
+        for (string& name : toMove) {
+            string* currentRoom = antsList[name].first;
+            auto nextRoomIndex = find(path.begin(), path.end(), *currentRoom);
+            moveAnt(name, &path[nextRoomIndex - path.begin() + 1], g);
+            //printAnts();
+            if (path[nextRoomIndex - path.begin() + 1] == dest) {
+                antsList[name].second = true;
+                AntsArrived++;
             }
         }
     }
 }
+
+
 
