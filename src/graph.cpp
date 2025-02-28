@@ -1,39 +1,7 @@
-#include "../include/Graph.h"
+#include "../include/graph.h"
 
 Graph::Graph(){}
 Graph::~Graph(){}
-
-// void Graph::addVertex(string v) {
-//     vertexList.push_back(v);
-// }
-
-// void Graph::addEdge(string v1, string v2, int weight) {
-//     edgeList[make_pair(v1, v2)] = weight;
-//     edgeList[make_pair(v2, v1)] = weight;
-// }
-// void Graph::printGraph() {
-//     for (auto const& [v, adj] : edgeList) {
-//         cout << v.first << " " << v.second << " " << adj << endl;
-//     }
-// }
-
-// void Graph::removeVertex(string v) {
-//     vertexList.erase(remove(vertexList.begin(), vertexList.end(), v), vertexList.end());
-//     for (auto const& [edge, weight] : edgeList) {
-//         if (edge.first == v || edge.second == v) {
-//             edgeList.erase(edge);
-//         }
-//     }
-// }
-
-// void Graph::removeEdge(string v1, string v2) {
-//     edgeList.erase(make_pair(v1, v2));
-//     edgeList.erase(make_pair(v2, v1));
-// }
-
-// string Graph::getVertex(string i) {
-//     return vertexList.front();
-// }
 
 // Ajouter un sommet
 void Graph::addVertex(string v) {
@@ -41,9 +9,9 @@ void Graph::addVertex(string v) {
 }
 
 // Ajouter une arête avec poids
-void Graph::addEdge(string v1, string v2, int weight) {
-    edgeList[{v1, v2}] = weight;
-    edgeList[{v2, v1}] = weight;  // Graphe non orienté
+void Graph::addEdge(string v1, string v2, int weight1 , int weight2) {
+    edgeList[{v1, v2}] = weight2;
+    edgeList[{v2, v1}] = weight1;  // Graphe non orienté
 }
 
 // Afficher le graphe
@@ -83,7 +51,7 @@ int Graph::getVertexIndex(string v) {
 }
 
 // Algorithme de Dijkstra
-void Graph::shortestPath(string src, string dest) {
+vector<string> Graph::shortestPath(string src, string dest) {
 
     // Initialisation
     map<string, int> dist;
@@ -129,4 +97,7 @@ void Graph::shortestPath(string src, string dest) {
     }
     cout << endl;
     cout << "Distance : " << dist[dest] << endl;
+
+    return path;
 }
+
