@@ -91,7 +91,7 @@ vector<string> Graph::shortestPath(string src, string dest) {
         u = prev[u];
     }
     reverse(path.begin(), path.end());
-    cout << "Chemin le plus court de " << src << " à " << dest << " : ";
+    cout << "Chemin le plus court de " << src << " a " << dest << " : ";
     for (string v : path) {
         cout << v << " ";
     }
@@ -101,3 +101,43 @@ vector<string> Graph::shortestPath(string src, string dest) {
     return path;
 }
 
+void Graph::printGraphBinaryTree() {
+    map<string, vector<string>> adjacencyList;
+    for (auto const& [edge, weight] : edgeList) {
+        adjacencyList[edge.first].push_back(edge.second);
+        adjacencyList[edge.second].push_back(edge.first);
+    }
+    map<string, bool> visited;
+    cout << "\nGraphical representation of the anthill\n";
+    string startVertex = vertexList.front();
+    printTreeHelper(startVertex, adjacencyList, visited, 0);
+}
+
+void Graph::printTreeHelper(const string& currentVertex, map<string, vector<string>>& adjacencyList, map<string, bool>& visited, int level) {
+    visited[currentVertex] = true;
+    for (int i = 0; i < level; i++) {
+        cout << "    ";
+    }
+    cout << currentVertex << endl;
+    vector<string>& neighbors = adjacencyList[currentVertex];
+    sort(neighbors.begin(), neighbors.end());
+    for (const string& neighbor : neighbors) {
+        if (!visited[neighbor]) {
+            for (int i = 0; i < level + 1; i++) {
+                cout << "    ";
+            }
+            cout << "|--- " << neighbor << endl;
+            printTreeHelper(neighbor, adjacencyList, visited, level + 1);
+        }
+    }
+    vector<string>& extraNeighbors = adjacencyList[currentVertex];
+    for (const string& extraNeighbor : extraNeighbors) {
+        if (!visited[extraNeighbor] && extraNeighbor != currentVertex) {
+            for (int i = 0; i < level + 1; i++) {
+                cout << "    ";
+            }
+            cout << "|--- " << extraNeighbor << endl;
+            printTreeHelper(extraNeighbor, adjacencyList, visited, level + 1);
+        }
+    }
+}
