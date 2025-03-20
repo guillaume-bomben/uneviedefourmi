@@ -26,5 +26,6 @@ class Graph {
     private:
         vector<string> vertexList;  // Liste des sommets (nom)
         map<pair<string, string>, int> edgeList;  // Liste des arêtes avec poids
-        void printTreeHelper(const string &currentVertex, map<string, vector<string> > &adjacencyList,map<string, bool> &visited, int level);
+        void printTreeHelper(const string &currentVertex, map<string, vector<string> > &adjacencyList,
+                             map<string, bool> &visited, int level);
 };

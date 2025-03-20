@@ -113,7 +113,8 @@ void Graph::printGraphBinaryTree() {
     printTreeHelper(startVertex, adjacencyList, visited, 0);
 }
 
-void Graph::printTreeHelper(const string &currentVertex, map<string, vector<string> > &adjacencyList,map<string, bool> &visited, int level) {
+void Graph::printTreeHelper(const string &currentVertex, map<string, vector<string> > &adjacencyList,
+                            map<string, bool> &visited, int level) {
     visited[currentVertex] = true;
     for (int i = 0; i < level; i++) {
         cout << "    ";
