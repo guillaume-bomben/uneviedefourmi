@@ -20,10 +20,11 @@ class Graph {
         vector<string> shortestPath(string src, string dest);
         string getVertexName(int i) { return vertexList[i]; }
         int getEdgeWeight(string v1, string v2) { return edgeList[{v1, v2}]; }
+
         void printGraphBinaryTree();
 
     private:
         vector<string> vertexList;  // Liste des sommets (nom)
         map<pair<string, string>, int> edgeList;  // Liste des arêtes avec poids
-        void printTreeHelper(const string& currentVertex,map<string, vector<string>>& adjacencyList,map<string, bool>& visited,int level);
+        void printTreeHelper(const string &currentVertex, map<string, vector<string> > &adjacencyList,map<string, bool> &visited, int level);
 };

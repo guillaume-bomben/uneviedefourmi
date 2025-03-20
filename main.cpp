@@ -40,7 +40,6 @@ int main() {
     }
 
 
-
     g.addEdge("Sv", "S1", numberOfAnts, 2);
     g.addEdge("S1", "S2", 2, 1);
     g.addEdge("S2", "S3", 2, 1);
