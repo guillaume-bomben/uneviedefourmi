@@ -108,7 +108,7 @@ void Graph::printGraphBinaryTree() {
         adjacencyList[edge.second].push_back(edge.first);
     }
     map<string, bool> visited;
-    cout << "\nGraphical representation of the anthill\n";
+    cout << "Graphical representation of the anthill";
     string startVertex = vertexList.front();
     printTreeHelper(startVertex, adjacencyList, visited, 0);
 }
