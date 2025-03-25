@@ -127,18 +127,8 @@ void Graph::printTreeHelper(const string &currentVertex, map<string, vector<stri
             for (int i = 0; i < level + 1; i++) {
                 cout << "    ";
             }
-            cout << "|--- " << neighbor << endl;
+            cout << "|---> " << neighbor << endl;
             printTreeHelper(neighbor, adjacencyList, visited, level + 1);
-        }
-    }
-    vector<string> &extraNeighbors = adjacencyList[currentVertex];
-    for (const string &extraNeighbor: extraNeighbors) {
-        if (!visited[extraNeighbor] && extraNeighbor != currentVertex) {
-            for (int i = 0; i < level + 1; i++) {
-                cout << "    ";
-            }
-            cout << "|--- " << extraNeighbor << endl;
-            printTreeHelper(extraNeighbor, adjacencyList, visited, level + 1);
         }
     }
 }
