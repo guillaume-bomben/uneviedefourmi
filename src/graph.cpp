@@ -91,7 +91,7 @@ vector<string> Graph::shortestPath(string src, string dest) {
         u = prev[u];
     }
     reverse(path.begin(), path.end());
-    cout << "Chemin le plus court de " << src << " à " << dest << " : ";
+    cout << "Chemin le plus court de " << src << " a " << dest << " : ";
     for (string v : path) {
         cout << v << " ";
     }
